@@ -1,0 +1,20 @@
+{
+  "name": "js-4-nlp-ml-ai",
+  "version": "1.0.0",
+  "description": "JavaScript for Basic NLP, ML, and AI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyush-multiplexer/js-4-nlp-ml-ai.git"
+  },
+  "keywords": [],
+  "author": "Piyush Goyani <thesourcepedia@gmail.com> (https://piyushgoyani.thesourcepedia.org)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piyush-multiplexer/js-4-nlp-ml-ai/issues"
+  },
+  "homepage": "https://github.com/piyush-multiplexer/js-4-nlp-ml-ai#readme"
+}
