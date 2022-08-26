@@ -26,3 +26,17 @@ console.log(doc.post("\\ ").text());
 
 // add hypen to string in whitespace
 console.log(doc.hyphenate().text());
+
+// Working with numbers
+const str = "Price of an Apple is $1.5, per KG may around 6 to 7.5 USD";
+const numDoc = nlp(str);
+
+console.log(numDoc.numbers().parse());
+console.log(numDoc.numbers().increment().text());
+console.log(numDoc.numbers().toText().text());
+
+const paragraph =
+  "Hello 😄, this is from Tesla,Inc! You can reach us at our contact no (+92) 0700-8888 and email at fack@example.total :) or physically at Canada.";
+const miscDoc = nlp(paragraph);
+console.log(miscDoc.emails());
+console.log(miscDoc.topics());
