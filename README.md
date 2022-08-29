@@ -4,3 +4,6 @@ This project demonstrates different examples of JavaScript in Bsic Usecases of N
 
 # Used Libraries
 - compromise
+
+## Blog Posts
+- [Natural Language Processing with JavaScript using Compromise](https://blog.thesourcepedia.org/natural-language-processing-with-javascript-using-compromise)
