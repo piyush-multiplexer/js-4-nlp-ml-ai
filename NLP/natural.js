@@ -132,39 +132,78 @@ const stopwords = [
   "now",
 ];
 
-const sent_tokenizer = new natural.SentenceTokenizer();
-const work_tokenizer = new natural.WordTokenizer();
+const sent_tokenizer = new natural.SentenceTokenizer(); // sentence tokenizer
+const word_tokenizer = new natural.WordTokenizer(); // word tokenizer
 
-let TfIdf = natural.TfIdf;
+let TfIdf = natural.TfIdf; // term-frequency inverce document frequency
 let tfidf = new TfIdf();
 
-const sents = sent_tokenizer.tokenize(doc);
+const sents = sent_tokenizer.tokenize(doc); // tokenize sentences
 let stopWRSent = [];
 let word_freq = {};
 let sentWeightArr = [];
 
+// sentences without stopwords
 sents.forEach((sent) => {
-  stopWRSent.push(remove_stopwords(sent));
-});
-let wordArr = [];
-stopWRSent.forEach((sent) => {
-  wordArr.push(work_tokenizer.tokenize(sent));
+  // stopWRSent.push(remove_stopwords(sent));
   tfidf.addDocument(remove_stopwords(sent));
 });
-wordArr = [].concat.apply([], wordArr);
-wordArr = [...new Set(wordArr)];
 
-wordArr.forEach(word=>{
-    tfidf.tfidfs(word, function (i, mesure) {
-        word_freq[word] = mesure
-      });
-})
+// remove stopwords from document
+let stopWRDoc = remove_stopwords(doc);
+let wordArr = [];
 
-let sent_scores = {}
+wordArr = word_tokenizer.tokenize(stopWRDoc);
 
+// find frequency of words
+wordArr.forEach((word) => {
+  if (!word_freq[word]) word_freq[word] = 0;
+  if (wordArr.indexOf(word) === -1) word_freq[word] = 1;
+  else word_freq[word] += 1;
+});
 
+// wordArr = [].concat.apply([], wordArr);
+// wordArr = [...new Set(wordArr)];
 
+// wordArr.forEach((word) => {
+//   tfidf.tfidfs(word, function (i, mesure) {
+//     word_freq[word] = mesure;
+//   });
+// });
 
+// console.log(word_freq);
+
+// get maximum frequency
+const MAX_FREQ = Math.max(...Object.values(word_freq));
+
+// calculate weighted frequency
+Object.keys(word_freq).forEach((key) => {
+  word_freq[key] = word_freq[key] / MAX_FREQ;
+});
+
+// calculate sentence scores
+let sent_scores = {};
+
+const word_freq_keys = Object.keys(word_freq);
+sents.forEach((sent) => {
+  word_tokenizer.tokenize(sent.toLowerCase()).forEach((word) => {
+    if (word_freq_keys.indexOf(word) !== -1) {
+      // shorter sentence for summary
+      if (sent.split(" ").length < 35) {
+        if (Object.keys(sent_scores).indexOf(sent) === -1) {
+          sent_scores[sent] = word_freq[word];
+        } else {
+          sent_scores[sent] += word_freq[word];
+        }
+      }
+    }
+  });
+});
+// console.log(sent_scores);
+
+import nlargest from  "./heapq/src/nlargest.js";
+
+console.log(nlargest(sent_scores, 7, Object.keys(sent_scores)));
 
 function remove_stopwords(str) {
   let res = [];
