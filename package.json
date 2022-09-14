@@ -20,6 +20,7 @@
   "homepage": "https://github.com/piyush-multiplexer/js-4-nlp-ml-ai#readme",
   "dependencies": {
     "compromise": "^14.4.5",
-    "natural": "^5.2.3"
+    "natural": "^5.2.3",
+    "node-fetch": "^3.2.10"
   }
 }
